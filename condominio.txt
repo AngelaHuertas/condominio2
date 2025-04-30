@@ -1,0 +1,1 @@
+Segunda versión del sistema de condominio, esta vez con interfas grafica y lenguaje js.
