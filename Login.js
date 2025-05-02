@@ -51,12 +51,10 @@ export function mostrarMenuPorRol(role) {
             menu += "2. Ver cuotas pagadas\n";
             menu += "3. Ver cuotas pendientes\n";
             menu += "4. Cerrar sesión\n";
-            menu += "5. Salir del sistema\n";
         } else {
             menu += "1. Gestión de pagos\n";
             menu += "2. Actualizar datos\n";
             menu += "3. Cerrar sesión\n";
-            menu += "4. Salir del sistema\n";
         }
 
         const opcion = prompt(menu);
@@ -89,10 +87,8 @@ export function mostrarMenuPorRol(role) {
                             || "¡Todos los apartamentos están al día!");
                         break;
                     case "4":
-                        salir = true;  // <- Cierra sesión
+                        window.location.href("./index.html")
                         return true;
-                    case "5":
-                        return false; 
                     default:
                         alert("⚠️ Opción no válida");
                 }
@@ -107,10 +103,8 @@ export function mostrarMenuPorRol(role) {
                         procesos.actualizacion();
                         break;
                     case "3":
-                        salir = true;  // <- Cierra sesión
+                        window.location.href("./index.html")
                         return true;
-                    case "4":
-                        return false; 
                     default:
                         alert("⚠️ Opción no válida");
                 }

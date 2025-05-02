@@ -26,7 +26,14 @@ class Procesos {
         while (!valido) {
             let entrada = prompt("Ingrese el número de su apartamento");
     
-            if (entrada === null || entrada.trim() === "" || isNaN(entrada) || parseInt(entrada) != Number(entrada)) {
+            if (entrada === null) {
+                mostrarMenuPorRol("Administrador");
+                return;
+            }
+            
+            entrada = entrada.trim();
+
+            if (entrada.trim() === "" || isNaN(entrada) || parseInt(entrada) != Number(entrada)) {
                 alert("Debe ingresar un número válido, sin letras ni símbolos.");
                 continue;
             }
@@ -57,97 +64,153 @@ class Procesos {
     
 
     ingresarNombres() {
-        do {
-            this.nomPropietario = prompt("Ingrese el nombre del propietario");
-            if (!this.nomPropietario || this.nomPropietario.trim() === "") {
-                alert("Recuerde que todos los campos deben ser llenados");
-                continue;
-            }
-            if (!isNaN(this.nomPropietario)) {
-                alert("Este campo no admite números");
-                continue;
-            }
-            if (this.nomPropietario && !/^[a-zA-Z\s]+$/.test(this.nomPropietario)) {
-                alert("Este campo solo admite letras. No se permiten números ni símbolos.");
-                continue;
-            }
-            break;
-        } while (true);
-    
-        do {
-            this.nomInquilino = prompt("Ingrese el nombre del inquilino");
-            if (this.nomInquilino && !/^[a-zA-Z\s]+$/.test(this.nomInquilino)) {
-                alert("Este campo solo admite letras. No se permiten números ni símbolos.");
-                continue;
-            }
-            if (!this.nomInquilino || this.nomInquilino.trim() === "") {
-                this.nomInquilino = "";
-                this.numAdultos = 0;
-                this.numNinos = 0;
-                alert("No se ingresó el nombre del inquilino, se omiten los campos de adultos y niños.");
-                break; 
-            } else {
-                this.ingresarPersonas(); 
+        let volverAPropietario = false;
+        do{  
+            do {
+                this.nomPropietario = prompt("Ingrese el nombre del propietario");
+
+                if(this.nomPropietario === null){
+                    this.ingresarNumApto();
+                    return;
+                }
+
+                this.nomPropietario = this.nomPropietario.trim();
+
+                if (this.nomPropietario.trim() === "") {
+                    alert("Recuerde que todos los campos deben ser llenados");
+                    continue;
+                }
+                if (!isNaN(this.nomPropietario)) {
+                    alert("Este campo no admite números");
+                    continue;
+                }
+                if (this.nomPropietario && !/^[a-zA-Z\s]+$/.test(this.nomPropietario)) {
+                    alert("Este campo solo admite letras. No se permiten números ni símbolos.");
+                    continue;
+                }
                 break;
-            }
-        } while (true);
+            } while (true);
+        
+            do {
+                this.nomInquilino = prompt("Ingrese el nombre del inquilino");
+                
+                if(this.nomInquilino === null){
+                    volverAPropietario = true;
+                    break;
+                }else{
+                    volverAPropietario=false;
+                }
+                
+                this.nomInquilino = this.nomInquilino.trim();
+
+                if (this.nomInquilino && !/^[a-zA-Z\s]+$/.test(this.nomInquilino)) {
+                    alert("Este campo solo admite letras. No se permiten números ni símbolos.");
+                    continue;
+                }
+
+                if ( this.nomInquilino.trim() === "") {
+                    this.nomInquilino = "";
+                    this.numAdultos = 0;
+                    this.numNinos = 0;
+                    alert("No se ingresó el nombre del inquilino, se omiten los campos de adultos y niños.");
+                    break; 
+                } else {
+                    this.ingresarPersonas(); 
+                    break;
+                }
+            } while (true);
+
+        } while (volverAPropietario);
     
         this.ingresarContrasena(); 
     }
     
 
     ingresarPersonas() {
-        do {
-            let adultos = prompt("Ingrese el número de adultos que viven en el apartamento " + this.numApto);
-    
-            if (!adultos || adultos.trim() === "") {
-                alert("Recuerde que todos los campos deben ser llenados.");
-                continue;
-            }
-    
-            if (isNaN(adultos) || parseInt(adultos) != Number(adultos)) {
-                alert("Debe ingresar un número válido, sin letras ni símbolos.");
-                continue;
-            }
-    
-            if (parseInt(adultos) < 1) {
-                alert("Parece que el apartamento tiene por lo menos un adulto.");
-                continue;
-            }
-    
-            this.numAdultos = parseInt(adultos);
-            break; 
-        } while (true);
-    
-        do {
-            let ninos = prompt("Ingrese el número de niños que viven en el apartamento " + this.numApto);
-            if (!ninos || ninos.trim() === "") {
-                alert("Recuerde que todos los campos deben ser llenados.");
-                continue;
-            }
-    
-            if (isNaN(ninos) || parseInt(ninos) != Number(ninos)) {
-                alert("Debe ingresar un número válido, sin letras ni símbolos.");
-                continue;
-            }
-    
-            if (parseInt(ninos) < 0) {
-                alert("En este campo no se permiten números negativos.");
-                continue;
-            }
-    
-            this.numNinos = parseInt(ninos);
-            break; 
-    
-        } while (true);
+        let volverAAdultos = false;
+        do{ 
+            do {
+                let adultos = prompt("Ingrese el número de adultos que viven en el apartamento " + this.numApto);
+                
+                if(adultos === null){
+                    this.ingresarNombres();
+                    return;
+                }
+
+                adultos = adultos.trim();
+
+                if (adultos.trim() === "") {
+                    alert("Recuerde que todos los campos deben ser llenados.");
+                    continue;
+                }
+        
+                if (isNaN(adultos) || parseInt(adultos) != Number(adultos)) {
+                    alert("Debe ingresar un número válido, sin letras ni símbolos.");
+                    continue;
+                }
+        
+                if (parseInt(adultos) < 1) {
+                    alert("Parece que el apartamento tiene por lo menos un adulto.");
+                    continue;
+                }
+        
+                this.numAdultos = parseInt(adultos);
+                break; 
+            } while (true);
+        
+            do {
+                let ninos = prompt("Ingrese el número de niños que viven en el apartamento " + this.numApto);
+
+                if(ninos === null){
+                    volverAAdultos = true;
+                    break;
+                }else{
+                    volverAAdultos=false;
+                }
+
+                ninos = ninos.trim();
+
+                if (ninos.trim() === "") {
+                    alert("Recuerde que todos los campos deben ser llenados.");
+                    continue;
+                }
+        
+                if (isNaN(ninos) || parseInt(ninos) != Number(ninos)) {
+                    alert("Debe ingresar un número válido, sin letras ni símbolos.");
+                    continue;
+                }
+        
+                if (parseInt(ninos) < 0) {
+                    alert("En este campo no se permiten números negativos.");
+                    continue;
+                }
+        
+                this.numNinos = parseInt(ninos);
+                break; 
+
+            } while (true); 
+            
+        }while (volverAAdultos);
+
+        
+        
     }
     
 
     ingresarContrasena(){
         do {
             this.elPassword = prompt("Ingrese una contraseña para el inquilino");
-            if (!this.elPassword || this.elPassword.trim() === "") {
+            
+            if(this.elPassword === null){
+                this.ingresarPersonas();
+                return;
+            }
+            
+            this.elPassword = this.elPassword.trim();
+
+            if (this.elPassword.trim() === "") {
                 alert("Recuerde que todos los campos deben ser llenados");
+                continue;
             }
         } while (!this.elPassword || this.elPassword.trim() === "");
 
@@ -187,6 +250,18 @@ class Procesos {
 
         alert("Volviendo al menú principal...");
         mostrarMenuPorRol("Administrador"); 
+    }
+
+    mostrarAptoUser(apto) {
+        alert("RESUMEN REGISTRO:\n" +
+            "Número del apartamento: " + apto.numApt +
+            "\nPropietario: " + apto.propietario +
+            "\nInquilino: " + apto.inquilino +
+            "\nAdultos: " + apto.adultos +
+            "\nNiños: " + apto.ninos);
+
+        alert("Volviendo al menú principal...");
+        mostrarMenuPorRol("Usuario"); 
     }
 
 
@@ -263,7 +338,7 @@ class Procesos {
         } while (opcion < 1 || opcion > 5);
     
         alert("¡Registro actualizado con éxito!");
-        this.mostrarApto(aptoSeleccionado); 
+        this.mostrarAptoUser(aptoSeleccionado); 
     }
 
     actualizarProp() {
