@@ -273,7 +273,10 @@ class Procesos {
     
         while (!encontrado) {
             let buscarApto = parseInt(prompt("Ingrese el número del apartamento que desea modificar"));
-    
+            if(!buscarApto ){
+                mostrarMenuPorRol("Usuario");
+                return;
+            }
             for (let a of this.apartamentos) {
                 if (buscarApto === a.numApt) {
                     encontrado = true;
@@ -295,6 +298,11 @@ class Procesos {
                 "3. Número de Adultos\n" +
                 "4. Número de Niños\n" +
                 "5. Todos los datos"));
+
+                if(!opcion ){
+                    this.actualizacion();
+                     return;
+                 }
     
             switch (opcion) {
                 case 1:
@@ -346,9 +354,12 @@ class Procesos {
         do {
         
             nuevoPropietario = prompt("Digite el nuevo Propietario");
-    
+            if(!nuevoPropietario ){
+                this.actualizacion();
+                return;
+            }
         
-            if (!nuevoPropietario || nuevoPropietario.trim() === "") {
+            if (nuevoPropietario.trim() === "") {
                 alert("Recuerde que todos los campos deben ser llenados");
                 continue;
             }
@@ -373,8 +384,11 @@ class Procesos {
         let nuevoInquilino;
         do {
             nuevoInquilino = prompt("Digite el nuevo Inquilino");
-    
-            if (!nuevoInquilino || nuevoInquilino.trim() === "") {
+            if(!nuevoInquilino ){
+                this.actualizacion();
+                return;
+            }
+            if (nuevoInquilino.trim() === "") {
                 alert("No se ingresó el nombre del inquilino.");
                 return null;
             }
@@ -395,8 +409,11 @@ class Procesos {
         let nuevoAdulto;
         do {
             nuevoAdulto = prompt("Digite el nuevo numero de adultos");
-    
-            if (!nuevoAdulto|| nuevoAdulto.trim() === "") {
+            if(!nuevoAdulto ){
+                this.actualizacion();
+                return;
+            }
+            if (nuevoAdulto.trim() === "") {
                 alert("Recuerde que todos los campos deben ser llenados.");
                 continue;
             }
@@ -422,7 +439,11 @@ class Procesos {
         let nuevoNino;
         do {
             nuevoNino = prompt("Digite el nuevo numero de niños"); 
-            if (!nuevoNino || nuevoNino.trim() === "") {
+            if(!nuevoNino ){
+                this.actualizacion();
+                return;
+            }
+            if (nuevoNino.trim() === "") {
                 alert("Recuerde que todos los campos deben ser llenados.");
                 continue;
             }
